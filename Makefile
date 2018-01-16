@@ -10,17 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_ls
+NAME = minishell
 SRC_NAME =	main.c\
-			error.c\
-			list.c\
-			trie.c\
-			affichage.c\
-			optionR.c \
-			listR.c \
-		 	trie_date.c\
-		 	checkerror.c
-
+			get_next_line.c\
+			cd.c\
+			echo.c\
+			outils.c\
+			processus.c\
+			setenv.c\
+			unsetenv.c
 SRC_PATH = .
 OBJ_PATH = .
 CC = gcc
