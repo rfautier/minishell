@@ -18,7 +18,9 @@ SRC_NAME =	main.c\
 			outils.c\
 			processus.c\
 			setenv.c\
-			unsetenv.c
+			unsetenv.c\
+			ft_strsplitwhitespace.c\
+			env.c
 SRC_PATH = .
 OBJ_PATH = .
 CC = gcc

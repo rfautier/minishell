@@ -14,33 +14,45 @@
 
 int lunchprocessus(char **argv, char **environ)
 {
-    pid_t father;
-    char **tab;
-    char *test;
-    int i;
+	pid_t father;
+	char **tab;
+	char *test;
+	int i;
+	struct stat s_filestat;
 
-    i = 1;
-    if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
-        return (0);
-    tab = ft_strsplit(get_env("PATH="), ':');
-    //Checker si possible avant de fork /!\//
-    father = fork();
-    if (father > 0)
-    {
-        wait(0);
-        return (1);
-    }
-    if (father == 0)
-    {
-        test = ft_strjoin(tab[i], "/");
-        test = ft_strjoin(test, argv[0]);
-        while (tab[i] && execve(test, argv, environ) == -1)
-        {
-            test = ft_strjoin(tab[i], "/");
-            test = ft_strjoin(test, argv[0]);
-            i++;
-        }
-        execve(argv[0], argv, environ);
-    }
-    return (0);
+	i = 1;
+	if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
+		return (0);
+	tab = ft_strsplit(get_env("PATH="), ':');
+	test = argv[0];
+	while (tab[i])
+	{
+		if (lstat(test, &s_filestat) != -1)
+			break;
+		test = ft_strjoin(tab[i], "/");
+		test = ft_strjoin(test, argv[0]);
+		i++;
+	}
+	if (lstat(test, &s_filestat) == -1)
+		return (0);
+	i = 1;
+	father = fork();
+	if (father > 0)
+	{
+		wait(0);
+		return (1);
+	}
+	if (father == 0)
+	{
+		test = ft_strjoin(tab[i], "/");
+		test = ft_strjoin(test, argv[0]);
+		while (tab[i] && execve(test, argv, environ) == -1)
+		{
+			test = ft_strjoin(tab[i], "/");
+			test = ft_strjoin(test, argv[0]);
+			i++;
+		}
+		execve(argv[0], argv, environ);
+	}
+	return (0);
 }

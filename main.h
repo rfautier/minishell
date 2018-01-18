@@ -14,7 +14,7 @@
 
 char **ft_strsplitwhitespace(char *str);
 
-void loop(char **tab, char **environ);
+char **loop(char **tab, char **environ);
 
 char **get_cmd();
 char *get_env(char *str);

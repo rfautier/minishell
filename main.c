@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-void loop(char **tab, char **environ)
+char **loop(char **tab, char **environ)
 {
 	if (!tab[0])
 		;
@@ -34,6 +34,7 @@ void loop(char **tab, char **environ)
 		;
 	else
 		ft_putstr("Command not found\n");
+	return (environ);
 }
 
 int main(int argc, char **argv, char **env)
@@ -50,7 +51,7 @@ int main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, sign);
 		tab = get_cmd();
-		loop(tab, environ);
+		environ = loop(tab, environ);
 	}
 	return (0);
 }
