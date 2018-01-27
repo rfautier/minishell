@@ -33,7 +33,7 @@ char **check_unsetenv(char **tab, char **environ)
 	o = 0;
 	while (environ[i])
 	{
-		env_split = ft_strsplit(environ[i], '=');
+		env_split = ft_strsplitwhitespace(environ[i], '=', '*');
 		if (ft_strcmp(env_split[0], tab[1]) == 0)
 			;
 		else
@@ -41,6 +41,7 @@ char **check_unsetenv(char **tab, char **environ)
 			new[o] = environ[i];
 			o++;
 		}
+		freedoubletab(env_split);
 		i++;
 	}
 	new[o] = NULL;

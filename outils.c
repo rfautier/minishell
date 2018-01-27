@@ -12,19 +12,19 @@
 
 #include "main.h"
 
-void	sign(int numero)
+void sign(int numero)
 {
 	numero = 0;
 	ft_putstr("\033[34;1m");
 	ft_putchar('\n');
 	ft_putstr("$> ");
-	return ;
+	return;
 }
 
-char	**get_cmd(void)
+char **get_cmd(void)
 {
-	char	**tab;
-	char	*line;
+	char **tab;
+	char *line;
 
 	line = NULL;
 	ft_putstr("\033[34;1m");
@@ -32,15 +32,16 @@ char	**get_cmd(void)
 	while (!(get_next_line(0, &line)))
 		;
 	ft_putstr("\033[0m");
-	tab = ft_strsplitwhitespace(line);
+	tab = ft_strsplitwhitespace(line, ' ', '\t');
+	free(line);
 	return (tab);
 }
 
-char	*get_env(char *str)
+char *ft_get_env(char *str) //a enlever
 {
-	extern char	**environ;
-	int			i;
-	int			o;
+	int i;
+	int o;
+	extern char **environ;
 
 	i = 0;
 	o = 0;
@@ -54,4 +55,31 @@ char	*get_env(char *str)
 		i++;
 	}
 	return (NULL);
+}
+
+void	printdoubletab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("tab[%d] =%s\n", i, tab[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+
+void freedoubletab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

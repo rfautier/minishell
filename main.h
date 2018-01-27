@@ -12,12 +12,22 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-char **ft_strsplitwhitespace(char *str);
+typedef struct s_free
+{
+	int free1;
+	int free2;
+}				t_free;
+
+char **ft_strsplitwhitespace(char *str, char c1, char c2);
 
 char **loop(char **tab, char **environ);
 
+void	printdoubletab(char **tab);
+
+void freedoubletab(char **tab);
+
 char **get_cmd();
-char *get_env(char *str);
+char *ft_get_env(char *str);
 int lunchprocessus(char **argv, char **environ);
 char **check_cd(char **tab, char **environ);
 void check_env(char **tab, char **environ);

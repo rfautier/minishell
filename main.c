@@ -17,7 +17,10 @@ char **loop(char **tab, char **environ)
 	if (!tab[0])
 		;
 	else if (ft_strcmp(tab[0], "exit") == 0)
+	{
+		freedoubletab(tab);
 		exit(0);
+	}
 	else if (ft_strcmp(tab[0], "clear") == 0)
 		ft_putstr("\033[H\033[2J");
 	else if (ft_strcmp(tab[0], "cd") == 0)
@@ -40,18 +43,19 @@ char **loop(char **tab, char **environ)
 int main(int argc, char **argv, char **env)
 {
 	char **tab;
-	extern char **environ;
+	int i;
 
+	i = 0;
 	argc = 0;
 	argv = NULL;
-	env = NULL;
 
 	ft_putstr("\033[H\033[2J");
 	while (1)
 	{
 		signal(SIGINT, sign);
 		tab = get_cmd();
-		environ = loop(tab, environ);
+		env = loop(tab, env);
+		freedoubletab(tab);
 	}
 	return (0);
 }

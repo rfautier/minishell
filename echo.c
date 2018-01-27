@@ -34,18 +34,18 @@ void check_echo(char **tab, char **environ)
 		{
 			while (environ[o])
 			{
-				str = ft_strsplit(environ[o], '=');
+				str = ft_strsplitwhitespace(environ[o], '=', '*');
 				if (ft_strcmp(str[0], tab[i] + 1) == 0)
 				{
 					ft_putstr(str[1]);
+					freedoubletab(str);
 					break;
 				}
+				freedoubletab(str);
 				o++;
 			}
 			if (!environ[o])
-			{
 				ft_putstr("Udefined variable.");
-			}
 			flag = 1;
 		}
 		o = 0;

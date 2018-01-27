@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-int countword(char *str)
+int countword(char *str, char c1, char c2)
 {
 	int i;
 	int count;
@@ -21,18 +21,18 @@ int countword(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while ((str[i] == ' ' || str[i] == '\t') && str[i])
+		while ((str[i] == c1 || str[i] == c2) && str[i])
 			i++;
 		if (str[i] == '\0')
 			break;
-		while ((str[i] != ' ' && str[i] != '\t') && str[i])
+		while ((str[i] != c1 && str[i] != c2) && str[i])
 			i++;
 		count++;
 	}
 	return (count);
 }
 
-char **fill(char **tab, char *str)
+char **fill(char **tab, char *str, char c1, char c2)
 {
 	int i;
 	int o;
@@ -43,11 +43,11 @@ char **fill(char **tab, char *str)
 	i = 0;
 	while (str[i])
 	{
-		while ((str[i] == ' ' || str[i] == '\t') && str[i])
+		while ((str[i] == c1 || str[i] == c2) && str[i])
 			i++;
 		if (str[i] == '\0')
 			break;
-		while ((str[i] != ' ' && str[i] != '\t') && str[i])
+		while ((str[i] != c1 && str[i] != c2) && str[i])
 		{
 			tab[z][o] = str[i];
 			o++;
@@ -61,7 +61,7 @@ char **fill(char **tab, char *str)
 	return (tab);
 }
 
-char **ft_strsplitwhitespace(char *str)
+char **ft_strsplitwhitespace(char *str, char c1, char c2)
 {
 	int i;
 	int o;
@@ -71,21 +71,23 @@ char **ft_strsplitwhitespace(char *str)
 	i = 0;
 	o = 0;
 	z = 0;
-	tab = malloc(sizeof(char *) * (countword(str) + 1));
+	if (!(tab = malloc(sizeof(char *) * (countword(str, c1, c2) + 1))))
+		exit(0);
 	while (str[i])
 	{
-		while ((str[i] == ' ' || str[i] == '\t') && str[i])
+		while ((str[i] == c1 || str[i] == c2) && str[i])
 			i++;
 		if (str[i] == '\0')
 			break;
-		while ((str[i] != ' ' && str[i] != '\t') && str[i])
+		while ((str[i] != c1 && str[i] != c2) && str[i])
 		{
 			o++;
 			i++;
 		}
-		tab[z] = malloc(sizeof(char) * o + 1);
+		if (!(tab[z] = malloc(sizeof(char) * o + 1)))
+			exit(0);
 		o = 0;
 		z++;
 	}
-	return (fill(tab, str));
+	return (fill(tab, str, c1, c2));
 }

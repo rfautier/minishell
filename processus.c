@@ -17,41 +17,53 @@ int lunchprocessus(char **argv, char **environ)
 	pid_t father;
 	char **tab;
 	char *test;
+	char *tmp;
 	int i;
 	struct stat s_filestat;
 
 	i = 1;
 	if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
 		return (0);
-	tab = ft_strsplit(get_env("PATH="), ':');
-	test = argv[0];
+	tab = ft_strsplitwhitespace(ft_get_env("PATH="), ':', '=');
+	test = ft_strjoin(argv[0], "");
 	while (tab[i])
 	{
 		if (lstat(test, &s_filestat) != -1)
 			break;
-		test = ft_strjoin(tab[i], "/");
-		test = ft_strjoin(test, argv[0]);
+		free(test);
+		tmp = ft_strjoin(tab[i], "/");
+		test = ft_strjoin(tmp, argv[0]);
+		free(tmp);
 		i++;
 	}
+	free(test);	
 	if (lstat(test, &s_filestat) == -1)
+	{
+		freedoubletab(tab);
 		return (0);
+	}
 	i = 1;
 	father = fork();
 	if (father > 0)
 	{
 		wait(0);
+		freedoubletab(tab);
 		return (1);
 	}
 	if (father == 0)
 	{
-		test = ft_strjoin(tab[i], "/");
-		test = ft_strjoin(test, argv[0]);
+		tmp = ft_strjoin(tab[i], "/");
+		test = ft_strjoin(tmp, argv[0]);
+		free(tmp);
 		while (tab[i] && execve(test, argv, environ) == -1)
 		{
-			test = ft_strjoin(tab[i], "/");
-			test = ft_strjoin(test, argv[0]);
+			free(test);
+			tmp = ft_strjoin(tab[i], "/");
+			test = ft_strjoin(tmp, argv[0]);
+			free(tmp);
 			i++;
 		}
+		free(test);
 		execve(argv[0], argv, environ);
 	}
 	return (0);

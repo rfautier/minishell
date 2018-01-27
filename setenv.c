@@ -36,6 +36,7 @@ char **check_setenv(char **tab, char **environ)
 	int i;
 	char *str;
 	char **env_split;
+	char *tmp;
 
 	if (!tab[1])
 	{
@@ -53,17 +54,21 @@ char **check_setenv(char **tab, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		env_split = ft_strsplit(environ[i], '=');
+		env_split = ft_strsplitwhitespace(environ[i], '=', '*');
 		if (ft_strcmp(env_split[0], tab[1]) == 0)
 		{
-			str = ft_strjoin(tab[1], "=");
+			tmp = ft_strjoin(tab[1], "=");
 			if (tab[2])
-				str = ft_strjoin(str, tab[2]);
+				str = ft_strjoin(tmp, tab[2]);
 			else
-				str = ft_strjoin(str, "\0");
+				str = ft_strjoin(tmp, "\0");
+			free(tmp);
+			freedoubletab(env_split);
 			environ[i] = str;
 			return (environ);
 		}
+		else
+			freedoubletab(env_split);
 		i++;
 	}
 	new = malloc(sizeof(char *) * i + 2);
@@ -73,12 +78,12 @@ char **check_setenv(char **tab, char **environ)
 		new[i] = environ[i];
 		i++;
 	}
-	str = ft_strjoin(tab[1], "=");
+	tmp = ft_strjoin(tab[1], "=");
 	if (tab[2])
-		str = ft_strjoin(str, tab[2]);
+		str = ft_strjoin(tmp, tab[2]);
 	else
-		str = ft_strjoin(str, "\0");
-	new[i] = malloc(sizeof(char) * ft_strlen(str));
+		str = ft_strjoin(tmp, "\0");
+	free(tmp);
 	new[i] = str;
 	new[i + 1] = NULL;
 	environ = new;
