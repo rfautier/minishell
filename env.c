@@ -87,7 +87,6 @@ void	refilltab(char **tab)
 		}
 		i++;
 	}
-	//printf("%s\n",tab[0]);
 }
 
 int		envprocessus(char **tab, char **test)
@@ -135,7 +134,6 @@ void	envi(char **tab)
 		test = malloc(sizeof(char) * flag);
 		test = filltest(tab, test);
 	}
-	//printf("%d\n", flag);
 	i = 2;
 	refilltab(tab);
 	if (!tab[0])

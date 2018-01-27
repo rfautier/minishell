@@ -32,7 +32,6 @@ int good_arg(char **tab)
 
 char **check_setenv(char **tab, char **environ)
 {
-	char **new;
 	int i;
 	char *str;
 	char **env_split;
@@ -71,21 +70,16 @@ char **check_setenv(char **tab, char **environ)
 			freedoubletab(env_split);
 		i++;
 	}
-	new = malloc(sizeof(char *) * i + 2);
 	i = 0;
 	while (environ[i])
-	{
-		new[i] = environ[i];
 		i++;
-	}
 	tmp = ft_strjoin(tab[1], "=");
 	if (tab[2])
 		str = ft_strjoin(tmp, tab[2]);
 	else
 		str = ft_strjoin(tmp, "\0");
+	environ[i] = str;
+	environ[i + 1] = NULL;
 	free(tmp);
-	new[i] = str;
-	new[i + 1] = NULL;
-	environ = new;
 	return (environ);
 }
