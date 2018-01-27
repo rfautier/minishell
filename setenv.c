@@ -42,12 +42,6 @@ char **check_setenv(char **tab, char **environ)
 		check_env(tab, environ);
 		return (environ);
 	}
-	/*if (tab[3] != NULL)
-	{
-		//printf("tab[3] = %s\n", tab[3]);
-		ft_putstr("Too much arguments\n");
-		return (environ);
-	}*/
 	if (!good_arg(tab))
 		return (environ);
 	i = 0;
@@ -63,7 +57,7 @@ char **check_setenv(char **tab, char **environ)
 				str = ft_strjoin(tmp, "\0");
 			free(tmp);
 			freedoubletab(env_split);
-			environ[i] = str;
+			environ[i] = str;//A FREE OLSPWD
 			return (environ);
 		}
 		else
