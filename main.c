@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-char **loop(char **tab, char **environ, int *c)
+char **loop(char **tab, char **environ, int *c, int *d)
 {
 	if (!tab[0])
 		;
@@ -24,7 +24,7 @@ char **loop(char **tab, char **environ, int *c)
 	else if (ft_strcmp(tab[0], "clear") == 0)
 		ft_putstr("\033[H\033[2J");
 	else if (ft_strcmp(tab[0], "cd") == 0)
-		environ = check_cd(tab, environ, c);
+		environ = check_cd(tab, environ, c, d);
 	else if (ft_strcmp(tab[0], "env") == 0)
 		check_env(tab, environ);
 	else if (ft_strcmp(tab[0], "setenv") == 0)
@@ -45,7 +45,9 @@ int main(int argc, char **argv, char **env)
 	char **tab;
 	int i;
 	int c;
+	int d;
 
+	d = 0;
 	c = 0;
 	i = 0;
 	argc = 0;
@@ -56,7 +58,7 @@ int main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, sign);
 		tab = get_cmd();
-		env = loop(tab, env, &c);
+		env = loop(tab, env, &c, &d);
 		freedoubletab(tab);
 	}
 	return (0);

@@ -106,9 +106,9 @@ int		envprocessus(char **tab, char **test)
 		if (father == 0)
 		{
 			if (!test[0])
-				loop(tab, NULL, 0);
+				loop(tab, NULL, 0, 0);
 			else
-				loop(tab, test, 0);
+				loop(tab, test, 0, 0);
 			exit(0);
 		}
 	}

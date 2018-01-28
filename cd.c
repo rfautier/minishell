@@ -27,7 +27,22 @@ void	libere(int *c, char **environ, char **ligne)
 		*c = 1;
 }
 
-char **check_cd(char **tab, char **environ, int *c)
+void	libere2(int *d, char **environ, char **ligne)
+{
+	int i;
+
+	i = 0;
+	if (*d == 1)
+	{
+		while (ft_strncmp(environ[i], ligne[1], 3) != 0)
+			i++;
+		free(environ[i]);
+	}
+	else
+		*d = 1;
+}
+
+char **check_cd(char **tab, char **environ, int *c, int *d)
 {
 	char **str;
 	char **tmp;
@@ -58,7 +73,7 @@ char **check_cd(char **tab, char **environ, int *c)
 		freedoubletab(str);
 		if (chdir(tab[1]) != -1)
 		{
-			//libere(c, environ, other); //faut faire un detecteur dffrent !!		
+			libere2(d, environ, other); //faut faire un detecteur dffrent !!		
 			getcwd(other[2], 256);
 			environ = check_setenv(other, environ);
 			free(other[2]);
@@ -75,7 +90,7 @@ char **check_cd(char **tab, char **environ, int *c)
 		str = ft_strsplitwhitespace(ft_get_env("OLDPWD"), '=', '*');
 		chdir(str[1]);
 		freedoubletab(str);
-		//libere(c, environ, other);	
+		libere2(d, environ, other);	
 		getcwd(other[2], 256);
 		environ = check_setenv(other, environ);
 		free(other[2]);

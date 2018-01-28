@@ -14,7 +14,7 @@
 
 char **check_unsetenv(char **tab, char **environ)
 {
-	char **new;
+	//char **new;
 	int i;
 	int o;
 	char **env_split;
@@ -27,24 +27,15 @@ char **check_unsetenv(char **tab, char **environ)
 		return (environ);
 	}
 	while (environ[i])
-		i++;
-	new = malloc(sizeof(char *) * i - 1);
-	i = 0;
-	o = 0;
-	while (environ[i])
 	{
 		env_split = ft_strsplitwhitespace(environ[i], '=', '*');
 		if (ft_strcmp(env_split[0], tab[1]) == 0)
-			;
-		else
-		{
-			new[o] = environ[i];
-			o++;
-		}
+			i++;
+		environ[o] = environ[i];
 		freedoubletab(env_split);
-		i++;
+		o++;
+		if (environ[i])
+			i++;
 	}
-	new[o] = NULL;
-	environ = new;
 	return (environ);
 }
