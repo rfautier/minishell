@@ -25,6 +25,11 @@ int lunchprocessus(char **argv, char **environ)
 	if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
 		return (0);
 	tab = ft_strsplitwhitespace(ft_get_env("PATH="), ':', '=');
+	if (!tab)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
 	test = ft_strjoin(argv[0], "");
 	while (tab[i])
 	{

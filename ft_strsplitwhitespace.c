@@ -71,6 +71,8 @@ char **ft_strsplitwhitespace(char *str, char c1, char c2)
 	i = 0;
 	o = 0;
 	z = 0;
+	if (str == NULL)
+		return (NULL);
 	if (!(tab = malloc(sizeof(char *) * (countword(str, c1, c2) + 1))))
 		exit(0);
 	while (str[i])

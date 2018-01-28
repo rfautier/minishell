@@ -36,6 +36,8 @@ int		nbrvari(char **tab)
 		o = 0;
 		i++;
 	}
+	if (flag == i - 2)
+		return (100);
 	return (flag);
 }
 
@@ -129,6 +131,16 @@ void	envi(char **tab)
 	tab[0] = NULL;
 	tab[1] = NULL;
 	flag = nbrvari(tab);
+	if (flag == 100)
+	{
+		i = 2;
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		return;
+	}
 	if (flag)
 	{
 		test = malloc(sizeof(char) * flag);

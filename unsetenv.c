@@ -49,6 +49,7 @@ char **check_unsetenv(char **tab, char **environ)
 		if (environ[i])
 			i++;
 	}
+	environ[o] = NULL;
 	if (here == 0)
 	{
 		ft_putstr("Error :");

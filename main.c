@@ -36,7 +36,11 @@ char **loop(char **tab, char **environ, int *c, int *d)
 	else if (lunchprocessus(tab, environ))
 		;
 	else
-		ft_putstr("Command not found\n");
+	{
+		ft_putstr("Error :");
+		ft_putstr(tab[0]);
+		ft_putstr(" : Command not found\n");
+	}
 	return (environ);
 }
 
