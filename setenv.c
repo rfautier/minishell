@@ -34,7 +34,6 @@ char **check_setenv(char **tab, char **environ)
 {
 	int i;
 	char *str;
-	char **env_split;
 	char *tmp;
 
 	if (!tab[1])
@@ -47,21 +46,17 @@ char **check_setenv(char **tab, char **environ)
 	i = 0;
 	while (environ[i])
 	{
-		env_split = ft_strsplitwhitespace(environ[i], '=', '*');
-		if (ft_strcmp(env_split[0], tab[1]) == 0)
+		if (ft_strncmp(environ[i], tab[1], ft_strlen(tab[1])) == 0)
 		{
 			tmp = ft_strjoin(tab[1], "=");
 			if (tab[2])
 				str = ft_strjoin(tmp, tab[2]);
 			else
-				str = ft_strjoin(tmp, "\0");
+				str = tmp;
 			free(tmp);
-			freedoubletab(env_split);
-			environ[i] = str;//A FREE OLSPWD
+			environ[i] = str;
 			return (environ);
 		}
-		else
-			freedoubletab(env_split);
 		i++;
 	}
 	i = 0;

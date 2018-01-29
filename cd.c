@@ -122,9 +122,6 @@ char **check_cd(char **tab, char **environ, int *c, int *d)
 		if (chdir(str[1]) != -1)
 		{
 			freedoubletab(str);
-			/*free(tab[0]);
-			free(tab[1]);
-			free(tab);*/
 			return (environ);
 		}
 		freedoubletab(str);
