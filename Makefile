@@ -20,7 +20,8 @@ SRC_NAME =	main.c\
 			setenv.c\
 			unsetenv.c\
 			ft_strsplitwhitespace.c\
-			env.c
+			env.c\
+			env2.c
 SRC_PATH = .
 OBJ_PATH = .
 CC = gcc

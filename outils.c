@@ -12,16 +12,16 @@
 
 #include "main.h"
 
-void sign(int numero)
+void	sign(int numero)
 {
 	numero = 0;
 	ft_putstr("\033[34;1m");
 	ft_putchar('\n');
 	ft_putstr("$> ");
-	return;
+	return ;
 }
 
-char **get_cmd(void)
+char	**get_cmd(void)
 {
 	char **tab;
 	char *line;
@@ -37,11 +37,11 @@ char **get_cmd(void)
 	return (tab);
 }
 
-char *ft_get_env(char *str) //a enlever
+char	*ft_get_env(char *str)
 {
-	int i;
-	int o;
-	extern char **environ;
+	int			i;
+	int			o;
+	extern char	**environ;
 
 	i = 0;
 	o = 0;
@@ -57,21 +57,7 @@ char *ft_get_env(char *str) //a enlever
 	return (NULL);
 }
 
-void	printdoubletab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		printf("tab[%d] =%s\n", i, tab[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-
-void freedoubletab(char **tab)
+void	freedoubletab(char **tab)
 {
 	int i;
 

@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-static char *ft_join(char *new, char *buff)
+static char	*ft_join(char *new, char *buff)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!(tmp = ft_strjoin(new, buff)))
 		return (NULL);
@@ -23,11 +23,11 @@ static char *ft_join(char *new, char *buff)
 	return (tmp);
 }
 
-static char *ft_put_the_line(char *str)
+static char	*ft_put_the_line(char *str)
 {
-	int i;
-	int len;
-	char *new;
+	int		i;
+	int		len;
+	char	*new;
 
 	i = 0;
 	len = 0;
@@ -47,10 +47,10 @@ static char *ft_put_the_line(char *str)
 	return (new);
 }
 
-static char *ft_delete(char *str)
+static char	*ft_delete(char *str)
 {
-	char *new;
-	int i;
+	char	*new;
+	int		i;
 
 	i = 0;
 	while (str[i] != '\n' && str[i])
@@ -65,11 +65,11 @@ static char *ft_delete(char *str)
 	return (new);
 }
 
-int get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
-	static char *str;
-	int ret;
-	char buf[BUFF_SIZE + 1];
+	static char		*str;
+	int				ret;
+	char			buf[BUFF_SIZE + 1];
 
 	if (fd < 0 || BUFF_SIZE < 0 || !line)
 		return (-1);
@@ -86,7 +86,7 @@ int get_next_line(const int fd, char **line)
 		if (ret == 0 && *str == '\0')
 			return (0);
 		if (ret == 0)
-			break;
+			break ;
 	}
 	*line = ft_put_the_line(str);
 	str = ft_delete(str);

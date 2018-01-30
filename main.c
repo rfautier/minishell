@@ -12,7 +12,14 @@
 
 #include "main.h"
 
-char **loop(char **tab, char **environ, int *c, int *d)
+void	printmainerror(char **tab)
+{
+	ft_putstr("Error :");
+	ft_putstr(tab[0]);
+	ft_putstr(" : Command not found\n");
+}
+
+char	**loop(char **tab, char **environ, int *c, int *d)
 {
 	if (!tab[0])
 		;
@@ -36,27 +43,22 @@ char **loop(char **tab, char **environ, int *c, int *d)
 	else if (lunchprocessus(tab, environ))
 		;
 	else
-	{
-		ft_putstr("Error :");
-		ft_putstr(tab[0]);
-		ft_putstr(" : Command not found\n");
-	}
+		printmainerror(tab);
 	return (environ);
 }
 
-int main(int argc, char **argv, char **env)
+int		main(int argc, char **argv, char **env)
 {
-	char **tab;
-	int i;
-	int c;
-	int d;
+	char	**tab;
+	int		i;
+	int		c;
+	int		d;
 
 	d = 0;
 	c = 0;
 	i = 0;
 	argc = 0;
 	argv = NULL;
-
 	ft_putstr("\033[H\033[2J");
 	while (1)
 	{

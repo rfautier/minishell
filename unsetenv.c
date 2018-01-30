@@ -12,27 +12,14 @@
 
 #include "main.h"
 
-char **check_unsetenv(char **tab, char **environ)
+int		check_unsetenv2(char **environ, char **tab, int here)
 {
-	//char **new;
-	int i;
-	int o;
-	char **env_split;
-	int here;
+	int		i;
+	int		o;
+	char	**env_split;
 
-	here = 0;
 	o = 0;
 	i = 0;
-	if (!tab[1])
-	{
-		ft_putstr("met un argument fdp\n");
-		return (environ);
-	}
-	if (tab[2])
-	{
-		ft_putstr("Too much argument\n");
-		return (environ);
-	}
 	while (environ[i])
 	{
 		env_split = ft_strsplitwhitespace(environ[i], '=', '*');
@@ -50,6 +37,25 @@ char **check_unsetenv(char **tab, char **environ)
 			i++;
 	}
 	environ[o] = NULL;
+	return (here);
+}
+
+char	**check_unsetenv(char **tab, char **environ)
+{
+	int here;
+
+	here = 0;
+	if (!tab[1])
+	{
+		ft_putstr("met un argument fdp\n");
+		return (environ);
+	}
+	if (tab[2])
+	{
+		ft_putstr("Too much argument\n");
+		return (environ);
+	}
+	here = check_unsetenv2(environ, tab, here);
 	if (here == 0)
 	{
 		ft_putstr("Error :");

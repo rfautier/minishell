@@ -12,141 +12,8 @@
 
 #include "main.h"
 
-
-int		nbrvari(char **tab)
+void	envi2(char **tab, char **test, int flag)
 {
-	int i;
-	int o;
-	int flag;
-
-	flag = 0;
-	o = 0;
-	i = 2;
-	while (tab[i])
-	{
-		while (tab[i][o])
-		{
-			if (tab[i][o] == '=')
-			{
-				flag++;
-				break ;
-			}
-			o++;
-		}
-		o = 0;
-		i++;
-	}
-	if (flag == i - 2)
-		return (100);
-	return (flag);
-}
-
-char	**filltest(char **tab, char **test)
-{
-	int i;
-	int o;
-	int z;
-
-	z = 0;
-	o = 0;
-	i = 2;
-	while (tab[i])
-	{
-		while (tab[i][o])
-		{
-			if (tab[i][o] == '=')
-			{
-				test[z] = tab[i];
-				z++;
-				break ;
-			}
-			o++;
-		}
-		o = 0;
-		i++;
-	}
-	test[z] = NULL;
-	return (test);
-}
-
-void	refilltab(char **tab)
-{
-	int i;
-	int o;
-	int z;
-
-	i = 2;
-	o = 0;
-	z = 0;
-	while (tab[i])
-	{
-		while (tab[i][o] && tab[i][o] != '=')
-			o++;
-		if (!tab[i][o])
-		{
-			tab[z] = tab[i];
-			z++;
-		}
-		i++;
-	}
-}
-
-int		envprocessus(char **tab, char **test)
-{
-	pid_t father;
-
-	if (ft_strcmp(tab[0], "echo") == 0 || ft_strcmp(tab[0], "env") == 0 ||
-		ft_strcmp(tab[0], "cd") == 0 || ft_strcmp(tab[0], "setenv") == 0 ||
-		ft_strcmp(tab[0], "unsetenv") == 0)
-	{
-		father = fork();
-		if (father > 0)
-		{
-			wait(0);
-			return (1);
-		}
-		if (father == 0)
-		{
-			if (!test[0])
-				loop(tab, NULL, 0, 0);
-			else
-				loop(tab, test, 0, 0);
-			exit(0);
-		}
-	}
-	return (0);
-}
-
-void	envi(char **tab)
-{
-	int i;
-	char **test;
-	int flag;
-
-	flag = 0;
-	if (!tab[2])
-		return;
-	free(tab[0]);
-	free(tab[1]);
-	tab[0] = NULL;
-	tab[1] = NULL;
-	flag = nbrvari(tab);
-	if (flag == 100)
-	{
-		i = 2;
-		while (tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		return;
-	}
-	if (flag)
-	{
-		test = malloc(sizeof(char) * flag);
-		test = filltest(tab, test);
-	}
-	i = 2;
 	refilltab(tab);
 	if (!tab[0])
 		return ;
@@ -160,28 +27,47 @@ void	envi(char **tab)
 		ft_putstr("error, cmd not found\n");
 	if (flag)
 		freedoubletab(test);
-	return;
+	return ;
 }
 
-void check_env(char **tab, char **environ)
+int		ft_flag(int flag, char **tab)
 {
 	int i;
-	int flag;
 
-	flag = 0;
-	i = 0;
-	if (!tab[1])
+	if (flag == 100)
 	{
-		while (environ[i])
+		i = 2;
+		while (tab[i])
 		{
-			ft_putstr(environ[i]);
-			ft_putchar('\n');
+			free(tab[i]);
 			i++;
 		}
-		return;
+		return (1);
 	}
-	else if (ft_strcmp(tab[1], "-i") == 0) //on peux lancer un cmd sans -i !
-		envi(tab);
-	else
-		ft_putstr("env: Wrong argument, try '-i'\n");
+	return (0);
+}
+
+void	envi(char **tab)
+{
+	char	**test;
+	int		flag;
+
+	flag = 0;
+	if (!tab[2])
+		return ;
+	free(tab[0]);
+	free(tab[1]);
+	tab[0] = NULL;
+	tab[1] = NULL;
+	test = NULL;
+	flag = nbrvari(tab);
+	if (ft_flag(flag, tab))
+		return ;
+	if (flag)
+	{
+		test = malloc(sizeof(char) * flag);
+		test = filltest(tab, test);
+	}
+	envi2(tab, test, flag);
+	return ;
 }
