@@ -12,49 +12,41 @@
 
 #include "main.h"
 
-int lunchprocessus(char **argv, char **environ)
+int		lunchprocessus2(char **argv, char **tab)
 {
-	pid_t father;
-	char **tab;
-	char *test;
-	char *tmp;
-	int i;
-	struct stat s_filestat;
+	int			i;
+	char		*test;
+	char		*tmp;
+	struct stat	s_filestat;
 
 	i = 1;
-	if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
-		return (0);
-	tab = ft_strsplitwhitespace(ft_get_env("PATH="), ':', '=');
-	if (!tab)
-	{
-		ft_putstr("Error\n");
-		return (1);
-	}
 	test = ft_strjoin(argv[0], "");
 	while (tab[i])
 	{
 		if (lstat(test, &s_filestat) != -1)
-			break;
+			break ;
 		free(test);
 		tmp = ft_strjoin(tab[i], "/");
 		test = ft_strjoin(tmp, argv[0]);
 		free(tmp);
 		i++;
 	}
-	free(test);	
+	free(test);
 	if (lstat(test, &s_filestat) == -1)
 	{
 		freedoubletab(tab);
-		return (0);
-	}
-	i = 1;
-	father = fork();
-	if (father > 0)
-	{
-		wait(0);
-		freedoubletab(tab);
 		return (1);
 	}
+	return (0);
+}
+
+void	lunchprocessus3(char **tab, char **argv, char **environ, pid_t father)
+{
+	int			i;
+	char		*test;
+	char		*tmp;
+
+	i = 1;
 	if (father == 0)
 	{
 		tmp = ft_strjoin(tab[i], "/");
@@ -71,5 +63,30 @@ int lunchprocessus(char **argv, char **environ)
 		free(test);
 		execve(argv[0], argv, environ);
 	}
+}
+
+int		lunchprocessus(char **argv, char **environ)
+{
+	pid_t		father;
+	char		**tab;
+
+	if (ft_strcmp(argv[0], "env") == 0 || ft_strcmp(argv[0], "echo") == 0)
+		return (0);
+	tab = ft_strsplitwhitespace(ft_get_env("PATH="), ':', '=');
+	if (!tab)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
+	if (lunchprocessus2(argv, tab))
+		return (0);
+	father = fork();
+	if (father > 0)
+	{
+		wait(0);
+		freedoubletab(tab);
+		return (1);
+	}
+	lunchprocessus3(tab, argv, environ, father);
 	return (0);
 }
