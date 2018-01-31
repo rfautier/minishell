@@ -6,7 +6,7 @@
 /*   By: rfautier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 17:02:16 by rfautier          #+#    #+#             */
-/*   Updated: 2018/01/31 17:06:09 by rfautier         ###   ########.fr       */
+/*   Updated: 2018/01/31 17:15:22 by rfautier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MAIN_H
 # include "libft.h"
 # include "get_next_line.h"
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
