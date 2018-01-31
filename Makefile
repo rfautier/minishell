@@ -21,7 +21,8 @@ SRC_NAME =	main.c\
 			unsetenv.c\
 			ft_strsplitwhitespace.c\
 			env.c\
-			env2.c
+			env2.c\
+			cd2.c
 SRC_PATH = .
 OBJ_PATH = .
 CC = gcc

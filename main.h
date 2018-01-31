@@ -12,11 +12,18 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-typedef struct s_free
+typedef struct s_ftcd
 {
-	int free1;
-	int free2;
-}				t_free;
+	char **tmp;
+	char **other;
+	int *c;
+	int *d;
+}				t_ftcd;
+
+
+void	libere(int *c, char **environ, char **ligne);
+void	libere2(int *d, char **environ, char **ligne);
+
 
 void	envi(char **tab);
 
